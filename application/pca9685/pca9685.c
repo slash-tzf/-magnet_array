@@ -86,7 +86,7 @@ bool pca9685_init(pca9685_handle_t *handle)
 
 	// Set mode registers to default values (Auto-Increment, Sleep, Open-Drain).
 	uint8_t mode1_reg_default_value = 0b00110000u;
-	uint8_t mode2_reg_default_value = 0b00000000u;
+	uint8_t mode2_reg_default_value = 0b00000100u;
 
 	if (handle->inverted) {
 		mode2_reg_default_value |= 0b00010000u;

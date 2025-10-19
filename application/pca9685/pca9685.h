@@ -28,7 +28,7 @@
 #define PCA9685_I2C_TIMEOUT 1
 #endif
 
-#define PCA9865_I2C_DEFAULT_DEVICE_ADDRESS 0x80
+#define PCA9865_I2C_DEFAULT_DEVICE_ADDRESS 0x40
 
 /**
  * Structure defining a handle describing a PCA9685 device.

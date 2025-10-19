@@ -61,6 +61,8 @@ void Error_Handler(void);
 #define SCL_GPIO_Port GPIOA
 #define SDA_Pin GPIO_PIN_5
 #define SDA_GPIO_Port GPIOA
+#define OE_Pin GPIO_PIN_6
+#define OE_GPIO_Port GPIOA
 
 /* USER CODE BEGIN Private defines */
 

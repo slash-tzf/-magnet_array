@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include "pca9685.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,7 +45,19 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+static soft_i2c_bus_t pca9685_bus = {
+  .scl_port = SCL_GPIO_Port,
+  .scl_pin = SCL_Pin,
+  .sda_port = SDA_GPIO_Port,
+  .sda_pin = SDA_Pin,
+  .delay_cycles = 64u
+};
 
+static pca9685_handle_t pca9685 = {
+  .i2c_bus = &pca9685_bus,
+  .device_address = (uint16_t)(PCA9865_I2C_DEFAULT_DEVICE_ADDRESS << 1),
+  .inverted = false
+};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,7 +68,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 /* USER CODE END 0 */
 
 /**
@@ -91,6 +103,36 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
   printf("USART1 printf test\r\n");
+  printf("Initializing PCA9685...\r\n");
+
+  if (!pca9685_init(&pca9685)) {
+    printf("PCA9685 init failed");
+    Error_Handler();
+  }else {
+    printf("PCA9685 initialized successfully\r\n");
+  }
+
+  if (!pca9685_set_pwm_frequency(&pca9685, 100.0f)) {
+    printf("Failed to set PCA9685 frequency");
+    Error_Handler();
+  }else {
+    printf("PCA9685 frequency set to 100Hz\r\n");
+  }
+  for (int i = 0; i < 16; i++) {
+    if (!pca9685_set_channel_duty_cycle(&pca9685, i, 0.5f, false)) {
+      printf("Failed to set duty cycle on channel");
+      Error_Handler();
+    }else {
+      printf("Channel %d duty cycle set to 50%%\r\n", i);
+    }
+
+  }
+  // if (!pca9685_set_channel_duty_cycle(&pca9685, 0u, 0.5f, false)) {
+  //   printf("Failed to force 50%% duty on channel 0\r\n");
+  //   Error_Handler();
+  // }
+
+  printf("All channels locked at 50%% duty\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
