@@ -47,6 +47,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     ${CMAKE_SOURCE_DIR}/application/pca9685/pca9685.c
     ${CMAKE_SOURCE_DIR}/application/soft_i2c/soft_i2c.c
+    ${CMAKE_SOURCE_DIR}/application/droplet_control/droplet_control.c
 )
 
 # Add include paths
@@ -54,6 +55,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     ${CMAKE_SOURCE_DIR}/application/pca9685
     ${CMAKE_SOURCE_DIR}/application/soft_i2c
+    ${CMAKE_SOURCE_DIR}/application/droplet_control
 )
 
 # Add project symbols (macros)

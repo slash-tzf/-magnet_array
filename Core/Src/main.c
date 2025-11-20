@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include "pca9685.h"
+#include "droplet_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-static soft_i2c_bus_t pca9685_bus = {
+soft_i2c_bus_t pca9685_bus = {
   .scl_port = SCL_GPIO_Port,
   .scl_pin = SCL_Pin,
   .sda_port = SDA_GPIO_Port,
@@ -53,7 +54,7 @@ static soft_i2c_bus_t pca9685_bus = {
   .delay_cycles = 64u
 };
 
-static pca9685_handle_t pca9685 = {
+pca9685_handle_t pca9685 = {
   .i2c_bus = &pca9685_bus,
   .device_address = (uint16_t)(PCA9865_I2C_DEFAULT_DEVICE_ADDRESS << 1),
   .inverted = false
@@ -112,27 +113,14 @@ int main(void)
     printf("PCA9685 initialized successfully\r\n");
   }
 
-  if (!pca9685_set_pwm_frequency(&pca9685, 100.0f)) {
+  if (!pca9685_set_pwm_frequency(&pca9685, 1000.0f)) {
     printf("Failed to set PCA9685 frequency");
     Error_Handler();
   }else {
-    printf("PCA9685 frequency set to 100Hz\r\n");
+    printf("PCA9685 frequency set to 1000Hz\r\n");
   }
-  for (int i = 0; i < 16; i++) {
-    if (!pca9685_set_channel_duty_cycle(&pca9685, i, 0.5f, false)) {
-      printf("Failed to set duty cycle on channel");
-      Error_Handler();
-    }else {
-      printf("Channel %d duty cycle set to 50%%\r\n", i);
-    }
 
-  }
-  // if (!pca9685_set_channel_duty_cycle(&pca9685, 0u, 0.5f, false)) {
-  //   printf("Failed to force 50%% duty on channel 0\r\n");
-  //   Error_Handler();
-  // }
-
-  printf("All channels locked at 50%% duty\r\n");
+  // test_all_magnets_on();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -142,6 +130,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    droplet_rotate_clockwise();
   }
   /* USER CODE END 3 */
 }

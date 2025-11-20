@@ -1,0 +1,22 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "STM32G031 - OpenOCD 调试",
+            "type": "cortex-debug",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/Debug/test.elf",
+            "servertype": "openocd",
+            "device": "STM32G031xx",
+            "gdbPath": "arm-none-eabi-gdb",
+            "configFiles": [
+                "openocd_g031.cfg"
+            ],
+            "runToMain": true,
+        }
+    ]
+}

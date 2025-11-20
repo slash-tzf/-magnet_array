@@ -1,0 +1,24 @@
+{
+    "name": "STM32 Dev Env",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    // 关键：使用特权模式以便访问 USB 设备 (ST-Link)
+    "runArgs": [
+        "--privileged" 
+    ],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "cmake.cmakePath": "cmake"
+            },
+            "extensions": [
+                "ms-vscode.cpptools",
+                "marus25.cortex-debug", 
+                "twxs.cmake",
+                "ms-vscode.cmake-tools"
+            ]
+        }
+    },
+    "remoteUser": "root"
+}
